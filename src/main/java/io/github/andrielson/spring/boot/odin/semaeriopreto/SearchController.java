@@ -1,5 +1,7 @@
 package io.github.andrielson.spring.boot.odin.semaeriopreto;
 
+import io.github.andrielson.spring.boot.odin.semaeriopreto.mailer.MailerService;
+import io.github.andrielson.spring.boot.odin.semaeriopreto.mailer.PublicationsMessage;
 import io.github.andrielson.spring.boot.odin.semaeriopreto.publications.Publication;
 import io.github.andrielson.spring.boot.odin.semaeriopreto.publications.SearchPublicationsUseCase;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class SearchController {
 
     private final SearchPublicationsUseCase useCase;
+    private final MailerService mailerService;
 
     @GetMapping("/{date}")
     public ResponseEntity<Set<Publication>> searchByDate(@PathVariable String date) {
@@ -32,6 +35,7 @@ public class SearchController {
         }
         Set<Publication> publications = useCase.searchByDate(localDate)
                 .collect(Collectors.toSet());
+        mailerService.sendEmail(new PublicationsMessage("x", localDate, publications));
         return publications.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(publications);
     }
 }

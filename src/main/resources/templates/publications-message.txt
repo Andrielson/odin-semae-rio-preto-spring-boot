@@ -1,0 +1,14 @@
+Olá!
+
+[# th:if="${#sets.isEmpty(publications)}"]Não houve publicações do SeMAE no Diário Oficial de São José do Rio Preto na data de [( ${date} )].[/]
+[# th:unless="${#sets.isEmpty(publications)}"]Segue a lista das publicações do SeMAE no Diário Oficial de São José do Rio Preto na data de [( ${date} )][/].
+[# th:unless="${#sets.isEmpty(publications)}"]
+[# th:each="pub : ${publications}"]
+ - [( ${pub.link} )]
+[/]
+[/]
+Atenciosamente,
+
+Oleg
+
+Caso deseje cancelar o recebimento desses e-mails, clique no link xyz.

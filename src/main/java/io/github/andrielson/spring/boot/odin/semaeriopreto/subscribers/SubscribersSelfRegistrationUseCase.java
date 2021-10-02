@@ -12,9 +12,7 @@ public class SubscribersSelfRegistrationUseCase {
     private final SubscribersRepositoryAdapter subscribersRepository;
 
     public void registerSubscriber(@NonNull String email) {
-        subscribersRepository.findByEmail(email).ifPresent(subscriber -> {
-            throw new RuntimeException("esse trem já existe!");
-        });
+        if (subscribersRepository.findByEmail(email).isPresent()) return;
         subscribersRepository.insert(new Subscriber(email, Instant.now()));
     }
 }

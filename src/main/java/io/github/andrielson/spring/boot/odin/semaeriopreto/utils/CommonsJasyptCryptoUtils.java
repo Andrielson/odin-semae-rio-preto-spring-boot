@@ -2,6 +2,8 @@ package io.github.andrielson.spring.boot.odin.semaeriopreto.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.jasypt.util.text.AES256TextEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,9 +11,10 @@ public class CommonsJasyptCryptoUtils implements CryptoDigestStringUtils {
 
     private final AES256TextEncryptor textEncryptor;
 
-    public CommonsJasyptCryptoUtils() {
+    @Autowired
+    public CommonsJasyptCryptoUtils(@Value("${odin.text.encryptor.password}") final String password) {
         textEncryptor = new AES256TextEncryptor();
-        textEncryptor.setPassword("myEncryptionPassword");
+        textEncryptor.setPassword(password);
     }
 
     @Override
@@ -21,7 +24,7 @@ public class CommonsJasyptCryptoUtils implements CryptoDigestStringUtils {
 
     @Override
     public String digest(String message) {
-        return DigestUtils.sha512Hex(message);
+        return DigestUtils.sha256Hex(message);
     }
 
     @Override

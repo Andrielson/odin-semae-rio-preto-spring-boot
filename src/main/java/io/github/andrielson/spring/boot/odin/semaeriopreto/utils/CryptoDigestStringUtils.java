@@ -2,8 +2,6 @@ package io.github.andrielson.spring.boot.odin.semaeriopreto.utils;
 
 import org.springframework.lang.NonNull;
 
-import java.util.Optional;
-
 public interface CryptoDigestStringUtils {
     @NonNull
     String decrypt(@NonNull String crypto);
